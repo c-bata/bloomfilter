@@ -5,3 +5,4 @@ authors = ["c-bata <contact@c-bata.link>"]
 edition = "2018"
 
 [dependencies]
+bit-vec = "0.5.0"
