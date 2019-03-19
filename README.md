@@ -1,5 +1,7 @@
 # bloomfilter
 
+See https://en.wikipedia.org/wiki/Bloom_filter for more details.
+
 Usage:
 
 ```rust
@@ -13,8 +15,6 @@ bloom.set(1004);
 assert_eq!(bloom.is_exit(1005), false);
 assert_eq!(bloom.is_exit(1020), true);
 ```
-
-See https://en.wikipedia.org/wiki/Bloom_filter for more details.
 
 **Special thanks:**
 

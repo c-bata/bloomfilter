@@ -2,15 +2,16 @@ use bit_vec::BitVec;
 
 #[derive(Debug)]
 pub struct BloomFilter {
-    pub buf: BitVec
+    buf: BitVec,
+    m: usize
 }
 
-fn h1(key: usize) -> usize {
-    return key % 8
+fn h1(key: usize, m: usize) -> usize {
+    return key % m
 }
 
-fn h2(key: usize) -> usize {
-    return (key * 2) % 8
+fn h2(key: usize, m: usize) -> usize {
+    return (key * 2) % m
 }
 
 impl BloomFilter {
@@ -19,24 +20,25 @@ impl BloomFilter {
 
         BloomFilter {
             buf,
+            m,
         }
     }
 
     pub fn set(&mut self, key: usize) {
-        let a = h1(key);
-        let b = h2(key);
+        let a = h1(key, self.m);
+        let b = h2(key, self.m);
         self.buf.set(a, true);
         self.buf.set(b, true);
     }
 
     pub fn is_exit(&self, key: usize) -> bool {
         let h1_bit: bool;
-        match self.buf.get(h1(key)) {
+        match self.buf.get(h1(key, self.m)) {
             Some(x) => h1_bit = x,
             None => return false
         }
         let h2_bit: bool;
-        match self.buf.get(h2(key)) {
+        match self.buf.get(h2(key, self.m)) {
             Some(x) => h2_bit = x,
             None => return false
         }
